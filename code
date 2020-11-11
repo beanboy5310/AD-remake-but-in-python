@@ -1,0 +1,100 @@
+#imports
+import time
+import threading
+from os import system, name 
+#imports
+
+#variable definitions
+money_1=1
+money_2=1
+dimension_mult_11=1
+dimension_mult_12=0
+dimension_amnt_11=0
+dimension_amnt_12=0
+length1=1
+length2=1
+choice_fail=0
+prgm_quit=0
+dimension_boosts=0
+galaxies=0
+player_choice=''
+#variable definitions
+
+#defining print clear function
+def clear():
+	_=system("clear")
+#defining print clear function
+
+#defining wait sleep function
+def wait(x):
+  time.sleep(x)
+#defining wait sleep function
+
+#some printing symbols for printed box
+#┏┓
+#┗┛
+#┃━
+#┻┳
+#some printing symbols for printed box
+
+#defining player interactions function
+def player_interactions_master():
+  global prgm_quit
+  while prgm_quit==0:
+    try:
+      threading.Thread(target=player_interactions).start()
+    except:
+      clear()
+      print("Something happened while interpreting the player's actions.")
+      prgm_quit=1
+      break
+
+def player_interactions():
+  pass
+#defining player interactions function
+
+#defining calculations function
+def calculations_master():
+  global prgm_quit
+  while prgm_quit==0:
+    try:
+      threading.Thread(target=calculations).start()
+    except:
+      clear()
+      print("Something happened while performing calculations.")
+      prgm_quit=1
+      break
+
+def calculations():
+  if money_1>=10:
+    money_1/=10
+    money_2+=1
+  if dimension_amnt_11>=10:
+    dimension_amnt_11/=10
+    dimension_amnt_12+=1
+  if dimension_mult_11>=10:
+    dimension_mult_11/=10
+    dimension_mult_12+=1
+#defining calculations function
+
+#defining print function
+def print_master():
+  global prgm_quit
+  while prgm_quit==0:
+    try:
+      threading.Thread(target=_print_).start()
+      wait(1)
+    except:
+      clear()
+      print("Something happened while printing.")
+      prgm_quit=1
+      break
+
+def _print_():
+  clear()
+  print("multiplier: "+str(dimension_mult_11)+"e"+str(dimension_mult_12))
+#defining print function
+
+threading.Thread(target=player_interactions_master).start()
+threading.Thread(target=calculations_master).start()
+threading.Thread(target=print_master).start()
